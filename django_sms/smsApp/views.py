@@ -425,6 +425,20 @@ def view_card(request, pk=None):
         context["member"] = models.Members.objects.get(id=pk)
         return render(request, "view_id.html", context)
 
+def scanner_view(request):
+    group = request.GET.get('group', '')
+    name = request.GET.get('name', '')
+    gender = request.GET.get('gender', '')
+    contact = request.GET.get('contact', '')
+    email = request.GET.get('email', '')
+    address = request.GET.get('address', '')
+
+    url = '/view_member/?group={}&name={}&gender={}&contact={}&email={}&address={}'.format(
+        group, name, gender, contact, email, address
+    )
+
+    return redirect(url)
+
 
 @login_required
 def view_scanner(request):

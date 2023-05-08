@@ -49,6 +49,7 @@
         <!-- <img
             src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{request.scheme}}://scanner.html/view_member/?group={{request.GET.group}}&name={{request.GET.name}}&gender={{request.GET.gender}}&contact={{request.GET.contact}}&email={{request.GET.email}}&address={{request.GET.address}}"> -->
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data={{request.scheme}}://{{request.get_host}}{% static 'scanner/scanner.html' %}?group={{request.GET.group}}&amp;name={{request.GET.name}}&amp;gender={{request.GET.gender}}&amp;contact={{request.GET.contact}}&amp;email={{request.GET.email}}&amp;address={{request.GET.address}}{% if request.path|slice:'12:' == '/view_member/' %}&amp;view=true{% endif %}">
+            
 
 
 
