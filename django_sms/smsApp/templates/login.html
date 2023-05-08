@@ -1,0 +1,179 @@
+{% extends 'base.html' %}{% load static %}{% block pageContent %}
+<style>
+    /* Use a background image with a linear gradient overlay */
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('{% static "images/golf.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Comic Sans MS, Comic Sans, cursive !important;
+    }
+
+    /* Center the content vertically and horizontally */
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Use a cursive font and increase the size of the title */
+    #page-title {
+        /* font-family: 'Kaushan Script', cursive; */
+        font-size: 50px;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 5px #000000;
+    }
+
+    /* Add a subtle shadow to the logo */
+    #logo-img {
+        height: 11em;
+        width: 26em;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Use an elegant and modern card style */
+    .card {
+        border: none;
+        border-radius: 30px !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        background-color: rgba(225, 225, 225, 0.45);
+    }
+
+    /* Make the login form more spacious and easy to read */
+    .form-group label {
+        font-size: 1.2em;
+        /* font-weight: bold; */
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        font-size: 1.2em;
+        padding: 0.8rem 1rem;
+        border-radius: 10rem !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .control-label {
+        border-radius: 10px !important;
+        color: #000000 !important;
+    }
+
+
+    .btn-primary {
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px !important;
+        background-color: #60b044;
+        border-color: #60b044;
+        transition: all 0.5s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #4f8e3c;
+        border-color: #4f8e3c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<div class="d-flex flex-column w-100 justify-content-center align-items-center">
+    <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12 py-5 mb-3">
+        <h2 class="text-center fw-bolder" id="page-title">Membership Management System</h2>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 pt-3">
+        <div class="card card-default rounded-0 shadow">
+            <div class="card-header">
+                <h4 class="card-title" style="text-align: center;"><b>Login</b></h4>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <form id="login-user" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="mdc-layout-grid">
+                            <div class="mdc-layout-grid__inner">
+                                <div class="form-group mb-3">
+                                    <label for="username" class="control-label">Username</label>
+                                    <input type="text" class="form-control rounded-0" autofocus name="username"
+                                        id="username" required="required">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="password" class="control-label">Password</label>
+                                    <input type="password" class="form-control rounded-0" autofocus name="password"
+                                        id="password" required="required">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="d-flex w-100 justify-content-center align-items-center">
+                                        <button class="btn btn-sm rounded-0 btn-primary">
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock pageContent %} {% block ScriptBlock %}
+<script>
+    $(function () {
+        $('#login-user').submit(function (e) {
+            e.preventDefault();
+            var _this = $(this)
+            $('.err-msg').remove();
+            var el = $('<div>')
+            el.addClass("alert alert-danger err-msg")
+            el.hide()
+            if (_this[0].checkValidity() == false) {
+                _this[0].reportValidity();
+                return false;
+            }
+            start_loader();
+            $.ajax({
+                headers: {
+                    "X-CSRFToken": '{{csrf_token}}'
+                },
+                url: "{% url 'smsApp:login-user' %}",
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                dataType: 'json',
+                error: err => {
+                    console.log(err)
+                    alert("An error occured", 'error');
+                    end_loader();
+                },
+                success: function (resp) {
+                    if (typeof resp == 'object' && resp.status == 'success') {
+                        el.removeClass("alert alert-danger err-msg")
+                        location.href = "{% url 'smsApp:home-page' %}"
+                    } else if (resp.status == 'failed' && !!resp.msg) {
+                        el.text(resp.msg)
+                    } else {
+                        el.text("An error occured", 'error');
+                        end_loader();
+                        console.err(resp)
+                    }
+                    _this.prepend(el)
+                    el.show('slow')
+                    $("html, body, .modal").scrollTop(0);
+                    end_loader()
+                }
+            })
+        })
+    })
+</script>
+{% endblock ScriptBlock %}

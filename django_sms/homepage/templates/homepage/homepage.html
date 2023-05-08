@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    
+
+<head>
+    <title>Grand Baie Golf Club</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Reset default styles */
+
+        /* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+} */
+        /* Set up page layout */
+        body {
+            font-family: Comic Sans MS, Comic Sans, cursive;
+            /* font-family :Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important; */
+            font-size: 16px;
+            line-height: 1.5;
+            /* color: #333; */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* nav ul {
+list-style: none;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: flex-end;
+}
+
+nav li {
+margin-left: 100px;
+}
+
+nav a {
+color: #333;
+text-decoration: none;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+nav a:hover {
+color: #6c63ff;
+} */
+
+        #hero {
+            /* background-image: url('{% static "images/golf.jpg" %}'); */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url('{% static "images/golf.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 550px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #hero h2 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+            margin-bottom: -10px;
+        }
+
+        #hero p {
+            font-size: 24px;
+            color: #fff;
+            text-align: center;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+        }
+
+        #hero img {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 75px;
+            height: auto;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #4632a8;
+        }
+
+        #features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 50px 0;
+        }
+
+        .feature {
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-radius: 30px;
+            transition: all ease-in-out 0.5s;
+        }
+
+        .feature:hover {
+            transform: translate(0px, -10px);
+            transition: all ease-in-out 0.5s;
+        }
+
+        /* rgba for lightgreen */
+        .feature i {
+            font-size: 30px;
+            color: lightgreen;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+        }
+
+        .feature h3 a {
+            text-decoration: none;
+            color: black;
+        }
+
+
+        .feature p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* rgba for lightgrey footer */
+        footer {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <h1>Grand Baie Golf Club</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Membership</a></li> 
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header> -->
+    <section id="hero">
+        <img src="{% static 'images/logo.png' %}" alt="Grand Baie Golf Club Logo">
+        <h2>Welcome to Grand Baie Golf Club</h2>
+        <p>Enjoy a round of golf in the beautiful surroundings of Mauritius.</p>
+
+    </section>
+    <section id="features">
+        <div class="feature">
+            <i class="fas fa-link"></i>
+            <h3><a href='login'>Admin Link</a></h3>
+            <p>Access the club's admin area to manage your account and bookings.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-users"></i>
+            <h3><a href="{% url 'smsApp:member-page' %}" class="btn btn-primary">Membership List</a>
+            </h3>
+
+
+            <p>View the current list of Grand Baie Golf Club members.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-qrcode"></i>
+            <h3><a href="{% url 'smsApp:scanner' %}">View Scanner</h3></a>
+            <p>Scan a member's QR code to view their details.</p>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Grand Baie Golf Club. All rights reserved.</p>
+    </footer>
+</body>

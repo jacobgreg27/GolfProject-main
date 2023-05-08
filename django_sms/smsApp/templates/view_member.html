@@ -1,0 +1,92 @@
+{% load static %} {% load humanize %}
+<style>
+  /* CSS for the form */
+  /* Style for the container */
+  /* Center the container */
+  #e-details {
+    margin: auto;
+    max-width: 600px;
+    background-color: #f7f7f7;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style for the member image */
+  #member-img {
+    display: block;
+    margin: auto;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Style for the definition list */
+  dl {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 20px;
+  }
+
+  /* Style for the term (dt) */
+  dt {
+    font-weight: bold;
+  }
+
+  /* Style for the description (dd) */
+  dd {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* Style for the link */
+  a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover style for the link */
+  a:hover {
+    background-color: #2e8540;
+  }
+</style>
+<div class="container-fluid" id="e-details">
+  <center>
+    <img
+      src="{% if member.image_path %}{{member.image_path.url}}{% else %}{% static 'assets/default/img/logo.jpg' %}{% endif %}"
+      alt="" class="img-thumbnail bg-gradient bg-dark" id="member-img">
+  </center>
+  <div class="lh-1">
+    <dl>
+      <dt>Group</dt>
+      <dd class="ps-4">{{member.group}}</dd>
+      <dt>Member Name</dt>
+      <dd class="ps-4">{{member.name}}</dd>
+      <dt>Gender</dt>
+      <dd class="ps-4">{{member.gender}}</dd>
+      <dt>Contact #</dt>
+      <dd class="ps-4">{{member.contact}}</dd>
+      <dt>Email</dt>
+      <dd class="ps-4">{{member.email}}</dd>
+      <dt>Address</dt>
+      <dd class="ps-4">{{member.address}}</dd>
+      <dt>Date and Time Added</dt>
+      <dd class="ps-4">{{member.date_added|date:"F d, Y h:i A"}}</dd>
+    </dl>
+    <a
+      href="{% url 'smsApp:scanner-view' %}?group={{member.group}}&name={{member.name}}&gender={{member.gender}}&contact={{member.contact}}&email={{member.email}}&address={{member.address}}">Generate
+      QR Code</a>
+
+  </div>
+</div>

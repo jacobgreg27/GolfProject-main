@@ -1,0 +1,203 @@
+{% extends "base.html" %} {% load humanize %} {% load customfilter %} {% block pageContent %}
+<style>
+
+
+   
+section {
+/* margin: 0 !important;
+padding: 0 !important; */
+
+font-family:Comic Sans MS, Comic Sans, cursive;
+
+}
+
+h2.fw-bolder {
+font-size: 36px !important;
+font-weight: bold !important;
+margin-top: 30px !important;
+margin-bottom: 20px !important;
+text-align: center !important;
+}
+
+hr {
+border: 2px solid #000 !important;
+margin: 0 auto 30px auto !important;
+width: 50% !important;
+}
+
+.row.justify-content-center {
+display: flex!important;
+justify-content: center!important;
+margin: 0 auto !important;
+/* max-width: 1200px !important; */
+}
+/* 
+.col-lg-3.col-md-6.col-sm-12.col-xs-12 {
+/* margin: 0 auto !important;
+padding: 0 !important; */
+/* width: 25% !important; */
+/* } */ */
+/* centering card-body in the oage */
+
+
+.card.card-default.rounded-0.shadow {
+border: none !important;
+
+margin-bottom: 20px !important;
+}
+
+.card-default.rounded-0 {
+  border-radius: 30px !important;
+
+}
+
+
+
+
+/* .card-body {
+/* padding: 20px !important; */
+/* } */ */
+
+.container-fluid {
+margin: 0 auto !important;
+max-width: 100% !important;
+}
+
+.row.mx-0.w-100.align-items-center {
+margin: 0 auto !important;
+max-width: 100% !important;
+}
+
+.col-3 {
+padding: 0 !important;
+text-align: center !important;
+}
+
+.fs-1.text-light.fa {
+color: #fff !important;
+}
+
+.col-9 {
+padding: 0 !important;
+}
+
+h1.text-end {
+font-size: 30px !important;
+/* font-weight: bold !important; */
+margin-bottom: 10px !important;
+}
+
+/* .col-12.text-end b {
+font-size: 20px !important;
+font-weight: bold !important;
+margin-top: 10px !important;
+text-transform: uppercase !important;
+} */
+
+.bg-primary.bg-gradient {
+  background-color: rgba(225, 225, 225, 0.45) !important;
+  
+}
+
+.bg-dark.bg-gradient {
+ background-color: rgba(225, 225, 225, 0.45) !important;
+}
+
+.bg-danger.bg-gradient {
+  background-color: rgba(225, 225, 225, 0.45) !important;
+}
+
+.bg-secondary.bg-gradient {
+  background-color: rgba(225, 225, 225, 0.45)!important;
+}
+
+
+.text-light {
+color: #fff !important;
+}
+
+
+    .white-text {
+        color: rgb(0, 0, 0);
+    }
+
+</style>
+<!--Section: Content-->
+<section class="">
+    <h2 class="fw-bolder white-text">Welcome {{request.user.first_name}}&nbsp;{{request.user.last_name}}!</h2>
+    <hr>
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-primary bg-gradient border-0 text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-th-list"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{groups|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Active Groups</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-dark text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-user-friends"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{active_members|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Active Members</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-danger text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-user-friends"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{inactive_members|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Inactive Members</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-secondary text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-users-cog"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{users|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Users</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+</div> {% endblock pageContent %} {% block ScriptBlock %}
+<script>
+</script>
+{% endblock ScriptBlock %} 

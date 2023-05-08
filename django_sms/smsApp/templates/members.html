@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block pageContent %}
+<style>
+    form {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+        ;
+    }
+
+    .card {
+        background-color: rgba(225, 225, 225, 0.273) !important;
+        border-radius: 30px !important;
+
+    }
+
+    .card-body {
+        color: white !important;
+        font-size: 17px;
+    }
+
+    .text-center {
+        /* font-size: 30px;
+        font-weight: bold; */
+        color: white !important;
+    }
+
+    td {
+        color: white !important;
+    }
+
+    .ok {
+        color: white;
+    }
+
+    input[type="file"] {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 16px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 0;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+
+<section class="py-4">
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file" class="ok">Upload a CSV file:</label>
+            <input type="file" name="file" id="file"><br><br>
+            <button type="submit">Submit</button>
+        </form>
+        {% comment %} <h3 class="fw-bolder text-center">List of Members</h3> {% endcomment %}
+        <center>
+            <hr class="bg-primary opacity-100" style="height:3px" width="5%">
+        </center>
+        <div class="card rounded-0 shadow">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="text-end mb-3">
+                        <button class="btn btn-sm btn-primary rounded-0 bg-gradient-primary" type="button"
+                            id="create_new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                    <table class="table table-bordered table-striped" id="member-tbl">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="15%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Date Added</th>
+                                <th class="text-center">Group</th>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td class="text-center">{{ forloop.counter }}</td>
+                                <td>{{ member.date_added|date:"Y-m-d h:i A"}}</td>
+                                <td>{{ member.group.name}}</td>
+                                <td>{{ member.code}}</td>
+                                <td>{{ member.name }}</td>
+                                <td class="text-center">
+                                    {% if member.status == '1' %}
+                                    <span
+                                        class="badge badge-success bg-gradient bg-success px-3 rounded-pill bg-opacity-75 text-sm py-1">Active</span>
+                                    {% else %}
+                                    <span
+                                        class="badge badge-secondary bg-gradient bg-secondary px-3 rounded-pill bg-opacity-75 text-sm py-1">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm rounded-0 border dropdown-toggle"
+                                            type="button" id="abtn{{member.pk}}" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="abtn{{member.pk}}">
+                                            <li>
+                                                <a class="dropdown-item view-data"
+                                                    href="{% url 'smsApp:view-member' member.id  %}" target="_blank"
+                                                    id="view-button">
+                                                    <i class="fa fa-eye text-dark"></i> View
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item edit-data" href="javascript:void(0)"
+                                                    data-url="{% url 'smsApp:manage-member-pk' member.pk %}">
+                                                    <i class="fa fa-edit text-primary"></i> Edit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item delete-data" href="javascript:void(0)"
+                                                    data-url="{% url 'smsApp:delete-member' member.pk %}">
+                                                    <i class="fa fa-trash text-danger"></i> Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock pageContent %}
+{% block ScriptBlock %}
+<script>
+    $(function () {
+        $('#create_new').click(function () {
+            uni_modal("<i class='fa fa-plus'></i> Add New Member", "{% url 'smsApp:manage-member' %}", "modal-lg")
+        })
+        $('.edit-data').click(function () {
+            uni_modal("<i class='fa fa-edit'></i> Edit Member Details", $(this).attr('data-url'), "modal-lg")
+        })
+        // $('.view-data').click(function() {
+        //     uni_modal("<i class='fa fa-th-list'></i> Member Details", $(this).attr('data-url'))
+        // })
+        $('.view_image').click(function () {
+            var img = $(this).attr('data-img-url')
+            $('#viewer_modal #img-viewer-field').attr('src', img)
+            $('#viewer_modal').modal('show')
+        })
+        $('.delete-data').click(function () {
+            _conf("Are you sure to delete this Member?", 'delete_member', ["'" + $(this).attr('data-url') + "'"])
+        })
+        $('#member-tbl').find('td, th').addClass('px-2 py-1 align-middle')
+        $('#member-tbl').DataTable({
+            columnDefs: [{
+                orderable: false,
+                targets: [4]
+            }],
+            lengthMenu: [
+                [25, 50, 100, -1],
+                [25, 50, 100, "All"]
+            ]
+        })
+
+        // var viewButton = document.getElementById("view-button");
+        // viewButton.addEventListener("click", function(event) {
+        //     event.preventDefault();
+        //     var url = viewButton.getAttribute("href");
+        //     window.location.href = url;
+        // });
+    })
+
+    function delete_member(url) {
+
+        var _this = $('#confirm_modal .modal-body')
+        $('.err-msg').remove();
+        var el = $('<div>')
+        el.addClass("alert alert-danger err-msg")
+        el.hide()
+        start_loader()
+        $.ajax({
+            headers: {
+                "X-CSRFToken": "{{csrf_token}}"
+            },
+            url: url,
+            dataType: 'JSON',
+            error: err => {
+                console.log(err)
+                alert("an error occurred.")
+                end_loader()
+            },
+            success: function (resp) {
+                if (resp.status == 'success') {
+                    location.reload()
+                } else if (!!resp.msg) {
+                    el.html(resp.msg)
+                    _this.prepend(el)
+                    el.show()
+                } else {
+                    el.html("An error occurred")
+                    _this.prepend(el)
+                    el.show()
+                }
+                end_loader()
+            }
+
+        })
+    }
+</script>
+
+
+{% endblock ScriptBlock %}
