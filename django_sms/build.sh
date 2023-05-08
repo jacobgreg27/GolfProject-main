@@ -11,5 +11,4 @@ then
 python manage.py createsuperuser --no-input
 python manage.py shell -c "from django.contrib.auth.models import User; User.objects.filter(email='$SUPERUSER_EMAIL').update(password='$SUPERUSER_PASSWORD')"
 fi
-password=$password
-python manage.py runserver
+
