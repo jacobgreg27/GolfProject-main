@@ -443,7 +443,7 @@ def scanner_view(request):
     if request.method == 'POST' and 'scan-result' in request.POST:
         scan_result = request.POST.get('scan-result')
         member = models.Members.objects.get(member_code=scan_result)
-        return redirect('/view_member/' + str(member.id))
+        return redirect('/view-member/' + str(member.id))
 
 @login_required
 def view_scanner(request):
@@ -492,7 +492,7 @@ import random
 
 
 def generate_code():
-    code = "".join(str(random.randint(0, 9)) for _ in range(9))
+    code = "".join(str(random.randint(0, 11)) for _ in range(11))
     return code
 
 
