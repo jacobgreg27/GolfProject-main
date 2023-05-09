@@ -339,7 +339,7 @@ def members(request):
         if file:
             create_db(file)
             # Redirect back to members page after processing the file
-            return redirect("member-page")
+            return redirect("smsApp:member-page")
 
     return render(request, "members.html", context)
 
