@@ -318,14 +318,6 @@ def delete_group(request, pk=None):
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
-@login_required
-# def members(request):
-#     context = context_data(request)
-#     context['page'] = 'Members'
-#     context['page_title'] = "Member List"
-#     context['members'] = models.Members.objects.filter(delete_flag = 0).all()
-#     return render(request, 'members.html', context)
-
 
 @login_required
 def members(request):
