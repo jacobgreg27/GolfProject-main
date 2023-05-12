@@ -7,3 +7,6 @@ django-qr-code
 numpy
 pandas
 cryptography
+psycopg2-binary
+dj-database-url
+django-environ
