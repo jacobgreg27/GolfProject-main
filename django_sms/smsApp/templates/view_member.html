@@ -85,7 +85,7 @@
       <dd class="ps-4">{{member.date_added|date:"F d, Y h:i A"}}</dd>
     </dl>
     <a
-      href="{% url 'smsApp:scanner-view' %}?group={{member.group}}&name={{member.name}}&gender={{member.gender}}&contact={{member.contact}}&email={{member.email}}&address={{member.address}}">Generate
+      href="{% url 'smsApp:scanner-view' %}?group={{member.group}}&name={{member.name}}&gender={{member.gender}}&contact={{member.contact}}&email={{member.email}}&address={{member.address}}&id={{member.id}}">Generate
       QR Code</a>
 
   </div>

@@ -50,7 +50,7 @@
         <!-- <img
             src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{request.scheme}}://scanner.html/view_member/?group={{request.GET.group}}&name={{request.GET.name}}&gender={{request.GET.gender}}&contact={{request.GET.contact}}&email={{request.GET.email}}&address={{request.GET.address}}"> -->
 <img
-    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data={{ request.scheme }}://{{ request.get_host }}/view_member/{{member_id}}{{request.path}}">
+    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data={{ request.scheme }}://{{ request.get_host }}/view_member/{{request.GET.id}}">
 
             
 
