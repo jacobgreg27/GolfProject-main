@@ -7,7 +7,6 @@ from .views import LoginView
 
 app_name = "homepage"
 urlpatterns = [
-    path("signup", views.signup, name="signup"),
     path("login/", LoginView.as_view(), name="login"),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

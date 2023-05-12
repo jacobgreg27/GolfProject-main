@@ -34,8 +34,6 @@ Sure, here's the updated code with "employee" replaced with "member":
                 </div>
                 <div class="lh-1">
                     <div class="text-center fw-bold">{{ member.name }}</div>
-                    <!-- <div class="text-center fw-light text-sm">{{ member.department }}</div>
-                    <div class="text-center fw-light text-sm">{{ member.position }}</div> -->
                 </div>
                 <div class="lh-1 text-center">
                     <img src="{% qr_url_from_text member.employee_code size=5 version=1 image_format='png' %}"

@@ -4,3 +4,6 @@
   if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) {
     var S2 = jQuery.fn.select2.amd;
   }
+  // Return the AMD loader configuration so it can be used outside of this file
+  return S2;
+}());

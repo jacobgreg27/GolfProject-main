@@ -47,8 +47,6 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "smsApp.apps.smsAppConfig",
     "homepage.apps.HomepageConfig",
-    "scanner.apps.ScannerConfig",
-    # "qr_code",
 ]
 
 MIDDLEWARE = [
@@ -90,17 +88,17 @@ WSGI_APPLICATION = "django_sms.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-# render PostqreSQL database(live)
-import dj_database_url
 DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URLS'))
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+# render PostqreSQL database(live)
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.parse(env('DATABASE_URLS'))
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -21,8 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("smsApp.urls")),
-    path("", include("homepage.urls")),
-    path("", include("scanner.urls")),
+    path("", include("homepage.urls")), 
 ]
 # hander404 = 'smsApp.views.error_404_view'
 # hander500 = 'smsApp.views.error_500_view'

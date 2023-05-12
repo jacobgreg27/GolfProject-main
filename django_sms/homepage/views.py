@@ -14,22 +14,14 @@ class HomePageView(TemplateView):
     template_name = "homepage/homepage.html"
 
 
-def signup(request):
-	msg=None
-	if request.method=='POST':
-		form=forms.SignUp(request.POST)
-		if form.is_valid():
-			form.save()
-			msg='Thank you for register.'
-	form=forms.SignUp
-	return render(request, 'registration/signup.html',{'form':form,'msg':msg})
+
 
 
 
 class LoginView(FormView):
     form_class = LoginForm
     template_name = 'login.html'
-    success_url = reverse_lazy('home/')
+    success_url = reverse_lazy('home/homepage.html')
 
     def form_valid(self, form):
         user = authenticate(
