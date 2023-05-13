@@ -47,8 +47,6 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "smsApp.apps.smsAppConfig",
     "homepage.apps.HomepageConfig",
-    "scanner.apps.ScannerConfig",
-    # "qr_code",
 ]
 
 MIDDLEWARE = [
